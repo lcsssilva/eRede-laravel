@@ -1,0 +1,53 @@
+{
+  "name": "lcs13761/erede-laravel",
+  "description": "description",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["laravel", "erede", "payment", "pagamento"],
+  "authors": [
+    {
+      "name": "lcs13",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^11.0",
+    "ext-curl": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.14",
+    "pestphp/pest": "^3.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lcs13761\\EredeLaravel\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lcs13761\\EredeLaravel\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lcs13761\\EredeLaravel\\Providers\\EredeServiceProvider"
+      ],
+      "aliases": {
+        "Erede": "Lcs13761\\EredeLaravel\\Facades\\Erede"
+      }
+    }
+  },
+
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
