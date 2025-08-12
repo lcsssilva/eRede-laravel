@@ -1,13 +1,21 @@
 {
   "name": "lcs13761/erede-laravel",
-  "description": "description",
+  "description": "Pacote Laravel para integração com a API de pagamentos da eRede (Rede S.A.)",
   "type": "library",
   "license": "MIT",
-  "keywords": ["laravel", "erede", "payment", "pagamento"],
+  "keywords": [
+    "laravel",
+    "erede",
+    "payment",
+    "pagamento"
+  ],
+  "homepage": "https://github.com/lcs13761/erede-laravel",
   "authors": [
     {
       "name": "lcs13",
-      "email": "email@example.com"
+      "email": "lcs13761@hotmail.com",
+      "homepage": "https://github.com/lcs13761",
+      "role": "Developer"
     }
   ],
   "require": {
@@ -39,9 +47,14 @@
       }
     }
   },
-
-  "minimum-stability": "stable",
-  "prefer-stable": true,
+  "scripts": {
+    "test": "pest",
+    "test-coverage": "pest --coverage",
+    "test-watch": "pest --watch",
+    "post-autoload-dump": [
+      "@php ./vendor/bin/testbench package:discover --ansi"
+    ]
+  },
   "config": {
     "sort-packages": true,
     "preferred-install": "dist",
@@ -49,5 +62,7 @@
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
-  }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
