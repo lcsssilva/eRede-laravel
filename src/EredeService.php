@@ -13,10 +13,10 @@ class EredeService
     public const USER_AGENT = 'eRede/' . self::VERSION . ' (PHP %s; Store %s; %s %s) %s';
 
     protected Store $store;
-    private string $platform;
-    private string $platformVersion;
+    private ?string $platform = null;
+    private ?string $platformVersion = null;
 
-    public function __construct(private readonly string $filiation, private readonly string $token)
+    public function __construct(private readonly ?string $filiation, private readonly ?string $token)
     {
         $this->store = new Store($this->filiation, $this->token);
     }
@@ -93,6 +93,7 @@ class EredeService
     public function get(string $tid): Transaction
     {
         $service = new GetTransactionService(store: $this->store);
+        
         $service->platform($this->platform, $this->platformVersion);
         $service->setTid($tid);
 
