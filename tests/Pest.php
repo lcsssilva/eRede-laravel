@@ -12,10 +12,11 @@
 */
 
 use Lcs13761\EredeLaravel\Tests\TestCase;
+use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
+use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
 
 uses(TestCase::class)->in('Feature');
 uses(TestCase::class)->in('Unit');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -33,17 +34,16 @@ expect()->extend('toBeOne', function () {
 });
 
 expect()->extend('toBeEredeService', function () {
-    return $this->toBeInstanceOf(\Lcs13761\EredeLaravel\EredeService::class);
+    return $this->toBeInstanceOf(\Lcs13761\EredeLaravel\Services\EredeTransaction::class);
 });
 
-expect()->extend('toBeTransaction', function () {
-    return $this->toBeInstanceOf(\Lcs13761\EredeLaravel\Transaction::class);
+expect()->extend('toBeTransactionDTO', function () {
+    return $this->toBeInstanceOf(TransactionDTO::class);
 });
-
 
 /*
 |--------------------------------------------------------------------------
-| Functions
+| Helper Functions
 |--------------------------------------------------------------------------
 |
 | While Pest is very powerful out-of-the-box, you may have some testing code specific to your
@@ -53,52 +53,117 @@ expect()->extend('toBeTransaction', function () {
 */
 
 /**
- * Criar uma Transaction real para testes
+ * Criar TransactionDTO para testes
  */
-function createRealTransaction(): \Lcs13761\EredeLaravel\Transaction
+function createTransactionDTO(): TransactionDTO
 {
-    $transaction = new \Lcs13761\EredeLaravel\Transaction();
-    $transaction->setAmount(1000); // R$ 10,00
-    $transaction->capture()->pix()->setQrCode();
-
-    return $transaction;
+    return TransactionDTO::create([
+        'amount' => 10000, // R$ 100,00
+        'reference' => 'ORDER-' . uniqid(),
+        'kind' => 'credit',
+        'cardHolderName' => 'João Silva',
+        'cardNumber' => '4111111111111111',
+        'expirationMonth' => '12',
+        'expirationYear' => '2025',
+        'securityCode' => '123',
+        'capture' => true
+    ]);
 }
-
 
 /**
- * Criar Transaction com dados mínimos necessários
+ * Criar PIX TransactionDTO para testes
  */
-function createMinimalTransaction(): \Lcs13761\EredeLaravel\Transaction
+function createPixTransactionDTO(): TransactionDTO
 {
-    $transaction = new \Lcs13761\EredeLaravel\Transaction();
-
-    // Configurar propriedades mínimas necessárias
-    $transaction->setAmount(1000);
-    $transaction->capture(true);
-
-    // Se a Transaction precisar de mais campos, adicione aqui
-    return $transaction;
+    return TransactionDTO::create([
+        'amount' => 10000,
+        'reference' => 'PIX-ORDER-' . uniqid(),
+        'kind' => 'pix',
+        'qrCode' => [
+            'dateTimeExpiration' => (new DateTime())->modify('+1 day')->format('Y-m-d\TH:i:s')
+        ]
+    ]);
 }
 
-function createMockTransaction(): \Mockery\MockInterface
+/**
+ * Criar resposta de transação bem-sucedida
+ */
+function createSuccessfulTransactionResponse(): array
 {
-    $transaction = Mockery::mock(\Lcs13761\EredeLaravel\Transaction::class);
-    $transaction->setAmount(1000)->capture(true);
-
-    $transaction->shouldReceive('setAmount')->andReturnSelf();
-    $transaction->shouldReceive('capture')->andReturnSelf();
-
-    return $transaction;
+    return [
+        'tid' => 'TID123456',
+        'nsu' => 'NSU789',
+        'amount' => 10000,
+        'reference' => 'ORDER-123',
+        'kind' => 'credit',
+        'status' => 'approved',
+        'authorizationCode' => 'AUTH123',
+        'returnCode' => '00',
+        'returnMessage' => 'Success',
+        'dateTime' => '2024-01-15T10:30:00',
+        'authorization' => [
+            'code' => 'AUTH123',
+            'message' => 'Approved',
+            'dateTime' => '2024-01-15T10:30:00',
+            'nsu' => 'NSU789'
+        ],
+        'brand' => [
+            'name' => 'Visa',
+            'returnCode' => '00',
+            'returnMessage' => 'Success'
+        ]
+    ];
 }
 
-function createEredeService(): \Lcs13761\EredeLaravel\EredeService
+/**
+ * Criar resposta de transação capturada
+ */
+function createCapturedTransactionResponse(): array
 {
-    return new \Lcs13761\EredeLaravel\EredeService('test-filiation', 'test-token');
+    return [
+        'tid' => 'TID123456',
+        'amount' => 10000,
+        'status' => 'captured',
+        'capture' => [
+            'nsu' => 'NSU789',
+            'dateTime' => '2024-01-15T10:45:00'
+        ]
+    ];
 }
 
-function createStore(): \Lcs13761\EredeLaravel\Store
+/**
+ * Criar resposta de transação cancelada
+ */
+function createCancelledTransactionResponse(): array
 {
-    return new \Lcs13761\EredeLaravel\Store('test-filiation', 'test-token');
+    return [
+        'tid' => 'TID123456',
+        'amount' => 10000,
+        'status' => 'canceled',
+        'returnCode' => '00',
+        'returnMessage' => 'Transaction cancelled successfully'
+    ];
 }
 
+/**
+ * Criar QrCodeDTO para testes
+ */
+function createQrCodeDTO(): QrCodeDTO
+{
+    return QrCodeDTO::create([
+        'affiliation' => '12345',
+        'amount' => 10000,
+        'qrCodeImage' => 'iVBORw0KGgoAAAANSUhEUgAA...',
+        'qrCodeData' => '00020126580014BR.GOV.BCB.PIX...',
+        'dateTimeExpiration' => '2024-12-31T23:59:59',
+        'status' => 'active'
+    ]);
+}
 
+/**
+ * Criar mock do HttpClient
+ */
+function createMockHttpClient(): \Mockery\MockInterface
+{
+    return Mockery::mock(\Lcs13761\EredeLaravel\Contracts\HttpClientInterface::class);
+}

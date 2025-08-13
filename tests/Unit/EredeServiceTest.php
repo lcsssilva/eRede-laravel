@@ -1,62 +1,195 @@
 <?php
 
-use Lcs13761\EredeLaravel\EredeService;
-use Lcs13761\EredeLaravel\Services\CreateTransactionService;
+use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
+use Lcs13761\EredeLaravel\DTOs\AuthorizationDTO;
+use Lcs13761\EredeLaravel\DTOs\BrandDTO;
+use Lcs13761\EredeLaravel\DTOs\CaptureDTO;
+use Lcs13761\EredeLaravel\Services\EredeTransaction;
+use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
+use Lcs13761\EredeLaravel\DTOs\ResponseDTO; // ✅ DTO correto
+use Lcs13761\EredeLaravel\Exceptions\TransactionException;
+use Lcs13761\EredeLaravel\Enums\HttpMethod;
 
 beforeEach(function () {
-    $this->eredeService = createEredeService();
+    $this->mockHttpClient = Mockery::mock(HttpClientInterface::class);
+    $this->eredeService = new EredeTransaction($this->mockHttpClient);
 });
 
 afterEach(function () {
     Mockery::close();
 });
 
-describe('EredeService', function () {
-    it('creates erede service with correct parameters', function () {
-        $service = new EredeService('filiation', 'token');
+describe('EredeTransaction Service', function () {
+    it('creates transaction successfully', function () {
+        // Arrange
+        $transactionRequest = createTransactionDTO();
+        $responseData = createSuccessfulTransactionResponse();
 
-        expect($service)->toBeEredeService();
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->andReturn(new ResponseDTO( // ✅ DTO correto
+                statusCode: 200,
+                data: $responseData,
+                success: true
+            ));
+
+        // Act
+        $result = $this->eredeService->createTransaction($transactionRequest);
+
+        // Assert
+        expect($result)->toBeInstanceOf(TransactionDTO::class);
+        expect($result->tid)->toBe('TID123456');
+        expect($result->amount)->toBe(10000);
+        expect($result->authorization)->toBeInstanceOf(AuthorizationDTO::class);
+        expect($result->brand)->toBeInstanceOf(BrandDTO::class);
     });
 
-    // Testes que não fazem chamadas HTTP reais
-    describe('without HTTP calls', function () {
-        it('creates service instances correctly', function () {
-            $transaction = createRealTransaction();
+    it('handles transaction creation failure', function () {
+        // Arrange
+        $transactionRequest = createTransactionDTO();
 
-            // Testar se o service é instanciado corretamente
-            $reflection = new ReflectionClass($this->eredeService);
-            $method = $reflection->getMethod('create');
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->andReturn(new ResponseDTO(
+                statusCode: 400,
+                data: ['error' => 'Invalid transaction'],
+                success: false, // ✅ Propriedade correta
+                error: 'Invalid transaction'
+            ));
 
-            // Verificar se não há erros na criação do serviço
-            expect(function() use ($transaction) {
-                new CreateTransactionService(createStore(), $transaction);
-            })->not->toThrow(Exception::class);
-        });
+        // Act & Assert
+        expect(fn() => $this->eredeService->createTransaction($transactionRequest))
+            ->toThrow(TransactionException::class, 'Falha ao criar transação');
+    });
 
-        it('authorizes transaction using create method', function () {
-            $transaction = createRealTransaction();
+    it('captures transaction successfully', function () {
+        // Arrange
+        $transactionId = 'TID123456';
+        $amount = 5000;
+        $responseData = createCapturedTransactionResponse();
 
-            // Mock do método create para evitar HTTP call
-            $mock = Mockery::mock(EredeService::class)->makePartial();
-            $mock->shouldReceive('create')->once()->andReturn($transaction);
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->with(
+                HttpMethod::PUT, // ✅ Sem namespace completo
+                "transactions/{$transactionId}",
+                ['amount' => $amount]
+            )
+            ->andReturn(new ResponseDTO(
+                statusCode: 200,
+                data: $responseData,
+                success: true
+            ));
 
-            $result = $mock->authorize($transaction);
+        // Act
+        $result = $this->eredeService->captureTransaction($transactionId, $amount);
 
-            expect($result)->toBeTransaction();
-        });
+        // Assert
+        expect($result)->toBeInstanceOf(TransactionDTO::class);
+        expect($result->tid)->toBe($transactionId);
+        expect($result->capture)->toBeInstanceOf(CaptureDTO::class); // ✅ Sem namespace completo
+    });
 
-        it('handles zero amount transaction logic', function () {
-            $transaction = createRealTransaction();
-            $originalAmount = $transaction->amount;
+    it('cancels transaction successfully', function () {
+        // Arrange
+        $transactionId = 'TID123456';
+        $responseData = createCancelledTransactionResponse();
 
-            // Mock para evitar HTTP calls
-            $mock = Mockery::mock(EredeService::class)->makePartial();
-            $mock->shouldReceive('create')->once()->andReturn($transaction);
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->with(
+                HttpMethod::DELETE,
+                "transactions/{$transactionId}",
+                []
+            )
+            ->andReturn(new ResponseDTO(
+                statusCode: 200,
+                data: $responseData,
+                success: true
+            ));
 
-            $result = $mock->zero($transaction);
+        // Act
+        $result = $this->eredeService->cancelTransaction($transactionId);
 
-            expect($result)->toBeTransaction();
-        });
+        // Assert
+        expect($result)->toBeInstanceOf(TransactionDTO::class);
+        expect($result->tid)->toBe($transactionId);
+        expect($result->status)->toBe('canceled');
+    });
 
+    it('gets transaction by id successfully', function () {
+        // Arrange
+        $transactionId = 'TID123456';
+        $responseData = createSuccessfulTransactionResponse();
+
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->with(
+                HttpMethod::GET,
+                "transactions/{$transactionId}"
+            )
+            ->andReturn(new ResponseDTO(
+                statusCode: 200,
+                data: $responseData,
+                success: true
+            ));
+
+        // Act
+        $result = $this->eredeService->getTransaction($transactionId);
+
+        // Assert
+        expect($result)->toBeInstanceOf(TransactionDTO::class);
+        expect($result->tid)->toBe($transactionId);
+    });
+
+    it('gets transaction by reference successfully', function () {
+        // Arrange
+        $reference = 'ORDER-123';
+        $responseData = createSuccessfulTransactionResponse();
+
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->with(
+                HttpMethod::GET,
+                'transactions',
+                ['reference' => $reference]
+            )
+            ->andReturn(new ResponseDTO(
+                statusCode: 200,
+                data: $responseData,
+                success: true
+            ));
+
+        // Act
+        $result = $this->eredeService->getTransactionByReference($reference);
+
+        // Assert
+        expect($result)->toBeInstanceOf(TransactionDTO::class);
+        expect($result->reference)->toBe($reference);
+    });
+
+    it('handles transaction not found', function () {
+        // Arrange
+        $transactionId = 'INVALID_TID';
+
+        $this->mockHttpClient
+            ->shouldReceive('request')
+            ->once()
+            ->andReturn(new ResponseDTO(
+                statusCode: 404,
+                data: ['error' => 'Transaction not found'],
+                success: false,
+                error: 'Transaction not found'
+            ));
+
+        // Act & Assert
+        expect(fn() => $this->eredeService->getTransaction($transactionId))
+            ->toThrow(TransactionException::class, 'Transação não encontrada');
     });
 });

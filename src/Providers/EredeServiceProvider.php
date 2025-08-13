@@ -2,9 +2,12 @@
 
 namespace Lcs13761\EredeLaravel\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
-use Lcs13761\EredeLaravel\EredeService;
+use Lcs13761\EredeLaravel\Contracts\EredeServiceInterface;
+use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
+use Lcs13761\EredeLaravel\DTOs\StoreConfigDTO;
+use Lcs13761\EredeLaravel\Http\EredeHttpClient;
+use Lcs13761\EredeLaravel\Services\EredeService;
 
 class EredeServiceProvider extends ServiceProvider
 {
@@ -21,14 +24,15 @@ class EredeServiceProvider extends ServiceProvider
 
         // Registrar o serviço
         $this->app->singleton(EredeService::class, function ($app) {
-            return new EredeService(
-                config('erede.filiation'),
-                config('erede.api_token')
-            );
+            return StoreConfigDTO::fromConfig($app['config']['erede']);
         });
 
-        // Alias para facilitar o uso
-        $this->app->alias(EredeService::class, 'erede');
+        $this->app->singleton(HttpClientInterface::class, EredeHttpClient::class);
+
+        $this->app->singleton(EredeServiceInterface::class, EredeService::class);
+
+        $this->app->alias(EredeServiceInterface::class, 'erede');
+
     }
 
     /**

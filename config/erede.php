@@ -6,9 +6,9 @@ return [
      *
      *
      */
-    'sandbox_authorization' => 'https://sandbox-erede.useredecloud.com.br',
+    'sandbox_authorization' => 'https://sandbox-erede.useredecloud.com.br/v1',
 
-    'production_authorization' => 'https://api.userede.com.br/erede',
+    'production_authorization' => 'https://api.userede.com.br/erede/v1',
 
     /*
      *
