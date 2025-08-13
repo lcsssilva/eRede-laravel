@@ -351,14 +351,14 @@ class TransactionDTO
 
     private function unserializeRefunds(mixed $value): void
     {
-        if (is_array($value)) {
+        if ($value) {
             $this->refunds = array_map(fn($refundValue) => RefundDTO::create($refundValue), $value);
         }
     }
 
     private function unserializeUrls(mixed $value): void
     {
-        if (is_array($value)) {
+        if ($value) {
             $this->urls = array_map(function ($refundValue) {
                 $refundArray = is_object($refundValue) ? get_object_vars($refundValue) : $refundValue;
                 return RefundDTO::fromArray($refundArray);
@@ -371,7 +371,7 @@ class TransactionDTO
      */
     private function unserializeCapture(mixed $value): void
     {
-        if (is_object($value)) {
+        if ($value) {
             $this->capture = CaptureDTO::create($value);
         }
     }
@@ -381,7 +381,7 @@ class TransactionDTO
      */
     private function unserializeAuthorization(mixed $value): void
     {
-        if (is_object($value)) {
+        if ($value) {
             $this->authorization = AuthorizationDTO::create($value);
             if ($value->brand) {
                 $this->brand = BrandDTO::create($value->brand);
@@ -412,7 +412,7 @@ class TransactionDTO
      */
     private function unserializeQrCodeResponse(mixed $value): void
     {
-        if (is_object($value)) {
+        if ($value) {
             $this->qrCode = QrCodeDTO::create($value);
         }
     }
