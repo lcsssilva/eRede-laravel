@@ -22,13 +22,13 @@ readonly class EredeTransaction implements EredeServiceInterface
      */
     public function createTransaction(TransactionDTO $transactionData): TransactionDTO
     {
-        $response = $this->httpClient->request(method: HttpMethod::POST, endpoint: 'transactions', data: $transactionData->toArray());
+        $response = $this->httpClient->request(method: HttpMethod::POST, endpoint: 'transactions', data: $transactionData->jsonSerialize());
 
         if (!$response->isSuccessful()) {
             throw TransactionException::invalidTransaction('Falha ao criar transação', $response->data);
         }
 
-        return TransactionDTO::fromArray($response->data);
+        return  (new TransactionDTO)->toObject($response->data);
     }
 
     /**
@@ -45,7 +45,7 @@ readonly class EredeTransaction implements EredeServiceInterface
 
         if (!$response->isSuccessful()) throw TransactionException::invalidTransaction('Falha ao capturar transação', $response->data);
 
-        return TransactionDTO::fromArray($response->data);
+        return  (new TransactionDTO)->toObject($response->data);
     }
 
     /**
@@ -63,7 +63,7 @@ readonly class EredeTransaction implements EredeServiceInterface
 
         if (!$response->isSuccessful()) throw TransactionException::invalidTransaction('Falha ao cancelar transação', $response->data);
 
-        return TransactionDTO::fromArray($response->data);
+        return  (new TransactionDTO)->toObject($response->data);
     }
 
     /**
@@ -76,7 +76,7 @@ readonly class EredeTransaction implements EredeServiceInterface
 
         if (!$response->isSuccessful()) throw TransactionException::transactionNotFound($transactionId);
 
-        return TransactionDTO::fromArray($response->data);
+        return  (new TransactionDTO)->toObject($response->data);
     }
 
     /**
@@ -89,6 +89,6 @@ readonly class EredeTransaction implements EredeServiceInterface
 
         if (!$response->isSuccessful()) throw TransactionException::transactionNotFound($reference);
 
-        return TransactionDTO::fromArray($response->data);
+        return  (new TransactionDTO)->toObject($response->data);
     }
 }

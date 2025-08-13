@@ -57,17 +57,8 @@ expect()->extend('toBeTransactionDTO', function () {
  */
 function createTransactionDTO(): TransactionDTO
 {
-    return TransactionDTO::create([
-        'amount' => 10000, // R$ 100,00
-        'reference' => 'ORDER-' . uniqid(),
-        'kind' => 'credit',
-        'cardHolderName' => 'João Silva',
-        'cardNumber' => '4111111111111111',
-        'expirationMonth' => '12',
-        'expirationYear' => '2025',
-        'securityCode' => '123',
-        'capture' => true
-    ]);
+    return  (new TransactionDTO)->setAmount(10000)->setReference('ORDER-' . uniqid())
+        ->creditCard('4111111111111111', 123,12,25, 'João Silva');
 }
 
 /**
@@ -75,14 +66,7 @@ function createTransactionDTO(): TransactionDTO
  */
 function createPixTransactionDTO(): TransactionDTO
 {
-    return TransactionDTO::create([
-        'amount' => 10000,
-        'reference' => 'PIX-ORDER-' . uniqid(),
-        'kind' => 'pix',
-        'qrCode' => [
-            'dateTimeExpiration' => (new DateTime())->modify('+1 day')->format('Y-m-d\TH:i:s')
-        ]
-    ]);
+    return  (new TransactionDTO)->setAmount(10000)->setReference('PIX-ORDER-' . uniqid())->pix()->setQrCode();
 }
 
 /**

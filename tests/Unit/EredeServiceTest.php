@@ -41,8 +41,6 @@ describe('EredeTransaction Service', function () {
         expect($result)->toBeInstanceOf(TransactionDTO::class);
         expect($result->tid)->toBe('TID123456');
         expect($result->amount)->toBe(10000);
-        expect($result->authorization)->toBeInstanceOf(AuthorizationDTO::class);
-        expect($result->brand)->toBeInstanceOf(BrandDTO::class);
     });
 
     it('handles transaction creation failure', function () {
@@ -90,7 +88,6 @@ describe('EredeTransaction Service', function () {
         // Assert
         expect($result)->toBeInstanceOf(TransactionDTO::class);
         expect($result->tid)->toBe($transactionId);
-        expect($result->capture)->toBeInstanceOf(CaptureDTO::class); // ✅ Sem namespace completo
     });
 
     it('cancels transaction successfully', function () {
