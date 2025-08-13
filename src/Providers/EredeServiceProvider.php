@@ -23,7 +23,7 @@ class EredeServiceProvider extends ServiceProvider
         );
 
         // Registrar o serviço
-        $this->app->singleton(EredeService::class, function ($app) {
+        $this->app->singleton(StoreConfigDTO::class, function ($app) {
             return StoreConfigDTO::fromConfig($app['config']['erede']);
         });
 
