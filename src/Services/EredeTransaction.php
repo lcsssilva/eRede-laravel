@@ -3,13 +3,13 @@
 namespace Lcs13761\EredeLaravel\Services;
 
 use Exception;
-use Lcs13761\EredeLaravel\Contracts\EredeServiceInterface;
+use Lcs13761\EredeLaravel\Contracts\EredeTransactionInterface;
 use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
 use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
 use Lcs13761\EredeLaravel\Enums\HttpMethod;
 use Lcs13761\EredeLaravel\Exceptions\TransactionException;
 
-readonly class EredeTransaction implements EredeServiceInterface
+readonly class EredeTransaction implements EredeTransactionInterface
 {
 
     public function __construct(private HttpClientInterface $httpClient)

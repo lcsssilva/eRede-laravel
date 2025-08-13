@@ -18,7 +18,7 @@ readonly class StoreConfigDTO
 
         return new self(
             filiation: $config['filiation'],
-            token: $config['token'],
+            token: $config['api_token'],
             environment: (new EnvironmentDTO($environment)),
         );
     }
