@@ -17,7 +17,8 @@ readonly class BrandDTO implements DTOToArray, DTOFromArray
         public ?string $name = null,
         public ?string $returnCode = null,
         public ?string $returnMessage = null,
-        public ?string $id = null,
+        public ?string $brandTid = null,
+        public ?string $authorizationCode = null,
         public ?string $acquirer = null,
     ) {}
 }
