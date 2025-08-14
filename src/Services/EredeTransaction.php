@@ -28,7 +28,11 @@ readonly class EredeTransaction implements EredeTransactionInterface
             throw TransactionException::invalidTransaction('Falha ao criar transação', $response->data);
         }
 
-        return (new PaymentRequestDTO)->fromArray($response->data);
+        $data = $response->data;
+
+        $data['kind'] = $transactionData->getKind();
+
+        return (new PaymentRequestDTO)->fromArray($data);
     }
 
     /**
