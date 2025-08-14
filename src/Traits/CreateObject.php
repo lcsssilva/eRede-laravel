@@ -22,7 +22,7 @@ trait CreateObject
      * @return BrandDTO|AuthorizationDTO|CaptureDTO|DeviceDTO|QrCodeDTO|RefundDTO|ThreeDSecureDTO|CreateObject
      * @throws Exception
      */
-    public static function create(object|array $data): self
+    public static function fromArray(object|array $data): self
     {
         // Converte object para array se necessário
         $dataArray = is_object($data) ? get_object_vars($data) : $data;

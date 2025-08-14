@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
 use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
 use Lcs13761\EredeLaravel\DTOs\StoreConfigDTO;
+use Lcs13761\EredeLaravel\Enums\EndpointType;
 use Lcs13761\EredeLaravel\Enums\HttpMethod;
 
 final readonly class EredeHttpClient implements HttpClientInterface
@@ -21,9 +22,9 @@ final readonly class EredeHttpClient implements HttpClientInterface
     /**
      * @throws ConnectionException
      */
-    public function request(HttpMethod $method, string $endpoint, array $data = [], array $headers = []): ResponseDTO
+    public function request(HttpMethod $method, string $endpoint, array $data = [], array $headers = [], EndpointType $endpointType = EndpointType::AUTHORIZATION): ResponseDTO
     {
-        $response = $this->makeRequest($method, $endpoint, $data, $headers);
+        $response = $this->makeRequest($method, $endpoint, $data, $headers, $endpointType);
 
         return new ResponseDTO(
             statusCode: $response->status(),
@@ -36,9 +37,9 @@ final readonly class EredeHttpClient implements HttpClientInterface
     /**
      * @throws ConnectionException
      */
-    private function makeRequest(HttpMethod $method, string $endpoint, array $data = [], array $headers = []): Response
+    private function makeRequest(HttpMethod $method, string $endpoint, array $data = [], array $headers = [], EndpointType $endpointType = EndpointType::AUTHORIZATION): Response
     {
-        $url = $this->storeConfig->environment->getBaseUrl() . '/' . ltrim($endpoint, '/');
+        $url = $this->getBaseUrlByType($endpointType) . '/' . ltrim($endpoint, '/');
 
         $client = Http::withBasicAuth(
             $this->storeConfig->filiation,
@@ -59,6 +60,15 @@ final readonly class EredeHttpClient implements HttpClientInterface
             HttpMethod::DELETE => $client->delete($url, $data),
         };
     }
+
+    private function getBaseUrlByType(EndpointType $endpointType): string
+    {
+        return match ($endpointType) {
+            EndpointType::AUTHORIZATION => $this->storeConfig->authorizationEnvironment->getBaseUrl(),
+            EndpointType::TOKENIZATION => $this->storeConfig->tokenizationEnvironment->getBaseUrl(),
+        };
+    }
+
 
     /**
      * @param array $customHeaders

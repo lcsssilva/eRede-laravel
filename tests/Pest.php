@@ -12,7 +12,7 @@
 */
 
 use Lcs13761\EredeLaravel\Tests\TestCase;
-use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
+use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
 use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
 
 uses(TestCase::class)->in('Feature');
@@ -38,7 +38,7 @@ expect()->extend('toBeEredeService', function () {
 });
 
 expect()->extend('toBeTransactionDTO', function () {
-    return $this->toBeInstanceOf(TransactionDTO::class);
+    return $this->toBeInstanceOf(PaymentRequestDTO::class);
 });
 
 /*
@@ -55,18 +55,18 @@ expect()->extend('toBeTransactionDTO', function () {
 /**
  * Criar TransactionDTO para testes
  */
-function createTransactionDTO(): TransactionDTO
+function createTransactionDTO(): PaymentRequestDTO
 {
-    return  (new TransactionDTO)->setAmount(10000)->setReference('ORDER-' . uniqid())
+    return  (new PaymentRequestDTO)->setAmount(10000)->setReference('ORDER-' . uniqid())
         ->creditCard('4111111111111111', 123,12,25, 'João Silva');
 }
 
 /**
  * Criar PIX TransactionDTO para testes
  */
-function createPixTransactionDTO(): TransactionDTO
+function createPixTransactionDTO(): PaymentRequestDTO
 {
-    return  (new TransactionDTO)->setAmount(10000)->setReference('PIX-ORDER-' . uniqid())->pix()->setQrCode();
+    return  (new PaymentRequestDTO)->setAmount(10000)->setReference('PIX-ORDER-' . uniqid())->pix()->setQrCode(QrCodeDTO::getDateTimeExpirationForTransaction());
 }
 
 /**
@@ -127,21 +127,6 @@ function createCancelledTransactionResponse(): array
         'returnCode' => '00',
         'returnMessage' => 'Transaction cancelled successfully'
     ];
-}
-
-/**
- * Criar QrCodeDTO para testes
- */
-function createQrCodeDTO(): QrCodeDTO
-{
-    return QrCodeDTO::create([
-        'affiliation' => '12345',
-        'amount' => 10000,
-        'qrCodeImage' => 'iVBORw0KGgoAAAANSUhEUgAA...',
-        'qrCodeData' => '00020126580014BR.GOV.BCB.PIX...',
-        'dateTimeExpiration' => '2024-12-31T23:59:59',
-        'status' => 'active'
-    ]);
 }
 
 /**

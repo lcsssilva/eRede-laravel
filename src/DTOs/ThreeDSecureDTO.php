@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Lcs13761\EredeLaravel\DTOs;
 
 use Exception;
-use JsonSerializable;
+use Lcs13761\EredeLaravel\Contracts\DTOFromArray;
+use Lcs13761\EredeLaravel\Contracts\DTOToArray;
 use Lcs13761\EredeLaravel\Traits\CreateObject;
 use Lcs13761\EredeLaravel\Traits\SerializeTrait;
 
-readonly class ThreeDSecureDTO implements JsonSerializable
+readonly class ThreeDSecureDTO implements DTOToArray, DTOFromArray
 {
     use CreateObject {
-        create as createFromTrait;
+        fromArray as createFromTrait;
     }
     use SerializeTrait;
 
@@ -51,23 +52,8 @@ readonly class ThreeDSecureDTO implements JsonSerializable
         // Converte object para array se necessário
         $dataArray = is_object($data) ? get_object_vars($data) : $data;
 
-        if (isset($dataArray['Device'])) {
-            $dataArray['Device'] = DeviceDTO::fromArray($dataArray['Device']);
-        }
+        if (isset($dataArray['Device'])) $dataArray['Device'] = DeviceDTO::fromArray($dataArray['Device']);
 
         return self::createFromTrait($dataArray);
-    }
-
-    public function toArray(): array
-    {
-        return $this->jsonSerialize();
-    }
-
-    /**
-     * @throws Exception
-     */
-    public static function fromArray(array $data): self
-    {
-        return self::create($data);
     }
 }

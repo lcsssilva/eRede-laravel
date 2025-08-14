@@ -9,17 +9,21 @@ readonly class StoreConfigDTO
     public function __construct(
         public string $filiation,
         public string $token,
-        public EnvironmentDTO $environment,
+        public EnvironmentDTO $authorizationEnvironment,
+        public EnvironmentDTO $tokenizationEnvironment,
     ) {}
 
     public static function fromConfig(array $config): self
     {
-        $environment = $config['sandbox'] ? $config['sandbox_authorization'] : $config['production_authorization'];
+        $authorizationUrl = $config['sandbox'] ? $config['sandbox_authorization'] : $config['production_authorization'];
+        $tokenizationUrl = $config['sandbox'] ? $config['sandbox_tokenization'] : $config['production_tokenization'];
+
 
         return new self(
             filiation: $config['filiation'],
             token: $config['api_token'],
-            environment: (new EnvironmentDTO($environment)),
+            authorizationEnvironment: new EnvironmentDTO($authorizationUrl),
+            tokenizationEnvironment: new EnvironmentDTO($tokenizationUrl),
         );
     }
 }

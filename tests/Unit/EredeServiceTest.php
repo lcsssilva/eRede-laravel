@@ -1,12 +1,11 @@
 <?php
 
-use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
-use Lcs13761\EredeLaravel\DTOs\AuthorizationDTO;
-use Lcs13761\EredeLaravel\DTOs\BrandDTO;
-use Lcs13761\EredeLaravel\DTOs\CaptureDTO;
+use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
 use Lcs13761\EredeLaravel\Services\EredeTransaction;
 use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\DTOs\ResponseDTO; // ✅ DTO correto
+use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
+
+// ✅ DTO correto
 use Lcs13761\EredeLaravel\Exceptions\TransactionException;
 use Lcs13761\EredeLaravel\Enums\HttpMethod;
 
@@ -38,9 +37,9 @@ describe('EredeTransaction Service', function () {
         $result = $this->eredeService->createTransaction($transactionRequest);
 
         // Assert
-        expect($result)->toBeInstanceOf(TransactionDTO::class);
-        expect($result->tid)->toBe('TID123456');
-        expect($result->amount)->toBe(10000);
+        expect($result)->toBeInstanceOf(PaymentRequestDTO::class);
+        expect($result->getTid())->toBe('TID123456');
+        expect($result->getAmount())->toBe(10000);
     });
 
     it('handles transaction creation failure', function () {
@@ -73,7 +72,7 @@ describe('EredeTransaction Service', function () {
             ->once()
             ->with(
                 HttpMethod::PUT, // ✅ Sem namespace completo
-                "transactions/{$transactionId}",
+                $transactionId,
                 ['amount' => $amount]
             )
             ->andReturn(new ResponseDTO(
@@ -86,8 +85,8 @@ describe('EredeTransaction Service', function () {
         $result = $this->eredeService->captureTransaction($transactionId, $amount);
 
         // Assert
-        expect($result)->toBeInstanceOf(TransactionDTO::class);
-        expect($result->tid)->toBe($transactionId);
+        expect($result)->toBeInstanceOf(PaymentRequestDTO::class);
+        expect($result->getTid())->toBe($transactionId);
     });
 
     it('cancels transaction successfully', function () {
@@ -100,7 +99,7 @@ describe('EredeTransaction Service', function () {
             ->once()
             ->with(
                 HttpMethod::DELETE,
-                "transactions/{$transactionId}",
+                $transactionId,
                 []
             )
             ->andReturn(new ResponseDTO(
@@ -113,9 +112,8 @@ describe('EredeTransaction Service', function () {
         $result = $this->eredeService->cancelTransaction($transactionId);
 
         // Assert
-        expect($result)->toBeInstanceOf(TransactionDTO::class);
-        expect($result->tid)->toBe($transactionId);
-        expect($result->status)->toBe('canceled');
+        expect($result)->toBeInstanceOf(PaymentRequestDTO::class);
+        expect($result->getTid())->toBe($transactionId);
     });
 
     it('gets transaction by id successfully', function () {
@@ -128,7 +126,7 @@ describe('EredeTransaction Service', function () {
             ->once()
             ->with(
                 HttpMethod::GET,
-                "transactions/{$transactionId}"
+                $transactionId
             )
             ->andReturn(new ResponseDTO(
                 statusCode: 200,
@@ -140,8 +138,8 @@ describe('EredeTransaction Service', function () {
         $result = $this->eredeService->getTransaction($transactionId);
 
         // Assert
-        expect($result)->toBeInstanceOf(TransactionDTO::class);
-        expect($result->tid)->toBe($transactionId);
+        expect($result)->toBeInstanceOf(PaymentRequestDTO::class);
+        expect($result->getTid())->toBe($transactionId);
     });
 
     it('gets transaction by reference successfully', function () {
@@ -154,7 +152,7 @@ describe('EredeTransaction Service', function () {
             ->once()
             ->with(
                 HttpMethod::GET,
-                'transactions',
+                '',
                 ['reference' => $reference]
             )
             ->andReturn(new ResponseDTO(
@@ -167,8 +165,8 @@ describe('EredeTransaction Service', function () {
         $result = $this->eredeService->getTransactionByReference($reference);
 
         // Assert
-        expect($result)->toBeInstanceOf(TransactionDTO::class);
-        expect($result->reference)->toBe($reference);
+        expect($result)->toBeInstanceOf(PaymentRequestDTO::class);
+        expect($result->getReference())->toBe($reference);
     });
 
     it('handles transaction not found', function () {

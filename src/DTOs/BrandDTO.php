@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Lcs13761\EredeLaravel\DTOs;
 
-use Exception;
+use Lcs13761\EredeLaravel\Contracts\DTOFromArray;
+use Lcs13761\EredeLaravel\Contracts\DTOToArray;
 use Lcs13761\EredeLaravel\Traits\CreateObject;
 use Lcs13761\EredeLaravel\Traits\SerializeTrait;
 
-readonly class BrandDTO
+readonly class BrandDTO implements DTOToArray, DTOFromArray
 {
     use CreateObject, SerializeTrait;
 
@@ -19,18 +20,4 @@ readonly class BrandDTO
         public ?string $id = null,
         public ?string $acquirer = null,
     ) {}
-
-    public function toArray(): array
-    {
-        return $this->jsonSerialize();
-    }
-
-
-    /**
-     * @throws Exception
-     */
-    public static function fromArray(array $data): self
-    {
-        return self::create($data);
-    }
 }

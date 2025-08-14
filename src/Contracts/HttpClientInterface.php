@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lcs13761\EredeLaravel\Contracts;
 
+use Lcs13761\EredeLaravel\Enums\EndpointType;
 use Lcs13761\EredeLaravel\Enums\HttpMethod;
 use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
 
@@ -14,7 +15,8 @@ interface HttpClientInterface
         HttpMethod $method,
         string $endpoint,
         array $data = [],
-        array $headers = []
+        array $headers = [],
+        EndpointType $endpointType = EndpointType::AUTHORIZATION
     ): ResponseDTO;
 
 }

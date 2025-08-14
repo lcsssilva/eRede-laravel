@@ -1,20 +1,20 @@
 <?php
 
 use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
-use Lcs13761\EredeLaravel\DTOs\TransactionDTO;
+use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
 
 
 describe('TransactionDTO', function () {
     it('creates transaction dto with basic data', function () {
 
-        $transaction = (new TransactionDTO())
+        $transaction = (new PaymentRequestDTO())
             ->setAmount(10000)
             ->setReference('ORDER-123')
             ->creditCard('5448280000000007', 123, 01, 28, 'João Silva');
 
-        expect($transaction->reference)->toBe('ORDER-123');
-        expect($transaction->kind)->toBe('credit');
-        expect($transaction->creditCard['cardholderName'])->toBe('João Silva');
+        expect($transaction->getReference())->toBe('ORDER-123');
+        expect($transaction->getKind())->toBe('credit');
+        expect($transaction->getCreditCard()['cardholderName'])->toBe('João Silva');
     });
 //
 
@@ -22,17 +22,13 @@ describe('TransactionDTO', function () {
     it('creates transaction dto with qr code response', function () {
         $date = QrCodeDTO::getDateTimeExpirationForTransaction();
 
-        $transaction = (new TransactionDTO())
+        $transaction = (new PaymentRequestDTO())
             ->setAmount(100.00)
             ->setReference('ORDER-123')
             ->pix()->setQrCode($date);
 
-
-
-        dd($transaction);
-
-        expect($transaction->qrCode)->toBeArray();
-        expect($transaction->qrCode["dateTimeExpiration"])->toBe($date['dateTimeExpiration']);
-        expect($transaction->kind)->toBe(TransactionDTO::PIX);
+        expect($transaction->getQrCode())->toBeArray();
+        expect($transaction->getQrCode()["dateTimeExpiration"])->toBe($date['dateTimeExpiration']);
+        expect($transaction->getKind())->toBe(PaymentRequestDTO::PIX);
     });
 });

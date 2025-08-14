@@ -9,4 +9,5 @@ interface EredeServiceInterface
 {
     public function transaction(): EredeTransactionInterface;
 
+    public function tokenization(): EredeTokenizationInterface;
 }

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Lcs13761\EredeLaravel\DTOs;
 
 use DateTimeInterface;
-use Exception;
+use Lcs13761\EredeLaravel\Contracts\DTOFromArray;
+use Lcs13761\EredeLaravel\Contracts\DTOToArray;
 use Lcs13761\EredeLaravel\Traits\CreateObject;
 use Lcs13761\EredeLaravel\Traits\SerializeTrait;
 
-readonly class RefundDTO
+readonly class RefundDTO implements DTOToArray, DTOFromArray
 {
     use SerializeTrait, CreateObject;
 
@@ -23,16 +24,4 @@ readonly class RefundDTO
     {
     }
 
-    public function toArray(): array
-    {
-        return $this->jsonSerialize();
-    }
-
-    /**
-     * @throws Exception
-     */
-    public static function fromArray(array $data): self
-    {
-        return self::create($data);
-    }
 }
