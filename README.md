@@ -1,27 +1,127 @@
 # eRede Laravel
 
-Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.). Este pacote fornece uma interface simples e elegante para processar pagamentos, consultar transações e gerenciar operações da eRede em aplicações Laravel.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/lcs13761/erede-laravel?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+[![License](https://img.shields.io/packagist/l/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+
+Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.).
 
 ## 🚀 Características
 
 - ✅ **Integração** com a API eRede
 - ✅ **Facade Laravel** para fácil utilização
 - ✅ **Service Provider** com auto-discovery
-- ✅ **Suporte a Sandbox** para desenvolvimento
-- ✅ **Type hints** completos para melhor experiência no IDE
+- ✅ **DTOs tipados** para melhor experiência no IDE
+- ✅ **Suporte a tokenização** de cartões
+- ✅ **PIX e Cartão de Crédito** suportados
 - ✅ **PSR-4** autoloading
-- ✅ **PHP 8.2+** suporte
+- ✅ **PHP 8.2+** com recursos modernos
 
 ## 📋 Requisitos
 
-- PHP 8.2 ou superior
-- Laravel 11.x
-- Extensão cURL habilitada
+- **PHP**: 8.2 ou superior
+- **Laravel**: 10.x, 11.x, 12.x
+- **Extensões PHP**: 
+  - cURL habilitada
+  - JSON
+  - OpenSSL
 
 ## 📦 Instalação
 
-Instale o pacote via Composer:
-
-```bash
+### 1. Instalar o pacote
+```
 composer require lcs13761/erede-laravel
 ```
+### 2. Publicar a configuração
+```
+php artisan vendor:publish --provider="Lcs13761\EredeLaravel\Providers\EredeServiceProvider"
+```
+### 3. Configurar variáveis de ambiente
+
+Adicione as seguintes variáveis ao seu arquivo `.env`:
+```
+env
+# Credenciais eRede
+EREDE_PV=seu_numero_pv
+EREDE_TOKEN=seu_token_aqui
+
+# Ambiente (sandbox(true) ou production(false))
+EREDE_SANDBOX=true
+```
+## 🔧 Uso Básico
+
+### Facade
+
+```php
+use Lcs13761\EredeLaravel\Facades\Erede;
+use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
+
+// Criar transação com cartão de crédito
+$payment = (new PaymentRequestDTO())
+    ->setAmount(100.00) // R$ 100,00
+    ->setReference('pedido-123')
+    ->creditCard('4242424242424242', '123', 12, 2024, 'João da Silva')
+    ->capture(true);
+
+$transaction = Erede::transaction()->createTransaction($payment);
+
+// Criar transação PIX
+$pixPayment = (new PaymentRequestDTO())
+    ->setAmount(50.00)
+    ->setReference('pedido-456')
+    ->setQrCode(['dateTimeExpiration' => (new DateTime())->modify('+1 day')->format('Y-m-d\TH:i:s')])
+    ->pix();
+
+$pixTransaction = Erede::transaction()->createTransaction($pixPayment);
+```
+
+### Tokenização
+
+```php
+// Tokenizar um cartão
+$tokenData = [
+    'cardNumber' => '4242424242424242',
+    'cardholderName' => 'João da Silva',
+    'expirationMonth' => 12,
+    'expirationYear' => 2024,
+];
+
+$token = Erede::tokenization()->createToken($tokenData);
+
+// Usar token em uma transação
+$payment = (new PaymentRequestDTO())
+    ->setAmount(100.00)
+    ->setReference('pedido-token')
+    ->setTokenCryptogram($token->getTokenizationId());
+```
+
+
+### Captura e Cancelamento
+
+```php
+// Capturar transação (parcial ou total)
+$capture = Erede::transaction()->captureTransaction('tid-123', 5000); // R$ 50,00
+
+// Cancelar transação (parcial ou total)
+$cancellation = Erede::transaction()->cancelTransaction('tid-123', 2000); // R$ 20,00
+
+// Consultar transação por TID
+$transaction = Erede::transaction()->getTransaction('tid-123');
+
+// Consultar por referência
+$transaction = Erede::transaction()->getTransactionByReference('pedido-123');
+```
+
+## 🤝 Contribuindo
+
+Contribuições são sempre bem-vindas!
+
+## 📄 Licença
+
+Este pacote é open-source e licenciado sob a [MIT License](LICENSE).
+
+## 🔗 Links Úteis
+
+- [Documentação oficial eRede](https://developer.userede.com.br/)
+---
