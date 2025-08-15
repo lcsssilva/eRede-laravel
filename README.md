@@ -88,12 +88,6 @@ $tokenData = [
 ];
 
 $token = Erede::tokenization()->createToken($tokenData);
-
-// Usar token em uma transação
-$payment = (new PaymentRequestDTO())
-    ->setAmount(100.00)
-    ->setReference('pedido-token')
-    ->setTokenCryptogram($token->getTokenizationId());
 ```
 
 
