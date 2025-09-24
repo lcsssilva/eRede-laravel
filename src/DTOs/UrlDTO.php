@@ -18,8 +18,7 @@ readonly class UrlDTO implements DTOToArray, DTOFromArray
     public function __construct(
         public ?string $url = null,
         public ?string $kind = self::CALLBACK,
-    )
-    {
+    ) {
     }
 
 }

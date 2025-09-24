@@ -37,10 +37,10 @@ readonly class QrCodeDTO implements DTOToArray, DTOFromArray
     /**
      *
      * @param object|array $data
-     * @return self
+     * @return static
      * @throws Exception
      */
-    public static function fromArray(object|array $data): self
+    public static function fromArray(object|array $data): static
     {
         // Converte object para array se necessário
         $dataArray = is_object($data) ? get_object_vars($data) : $data;

@@ -24,21 +24,20 @@ readonly class ThreeDSecureDTO implements DTOToArray, DTOFromArray
     public const MPI_THIRD_PARTY = 'mpi_third_party';
 
     public function __construct(
-        public ?string    $cavv = null,
-        public ?string    $eci = null,
-        public ?string    $url = null,
-        public ?string    $xid = null,
-        public int        $threeDIndicator = 2,
-        public ?string    $DirectoryServerTransactionId = null,
-        public ?string    $userAgent = null,
-        public bool       $embedded = true,
-        public ?string    $returnCode = null,
-        public ?string    $returnMessage = null,
-        public ?string    $challengePreference = null,
+        public ?string $cavv = null,
+        public ?string $eci = null,
+        public ?string $url = null,
+        public ?string $xid = null,
+        public int $threeDIndicator = 2,
+        public ?string $DirectoryServerTransactionId = null,
+        public ?string $userAgent = null,
+        public bool $embedded = true,
+        public ?string $returnCode = null,
+        public ?string $returnMessage = null,
+        public ?string $challengePreference = null,
         public ?DeviceDTO $Device = null,
-        public string     $onFailure = self::DECLINE_ON_FAILURE
-    )
-    {
+        public string $onFailure = self::DECLINE_ON_FAILURE
+    ) {
     }
 
     /**
@@ -47,12 +46,13 @@ readonly class ThreeDSecureDTO implements DTOToArray, DTOFromArray
      * @return self
      * @throws Exception
      */
-    public static function create(object|array $data): self
+    public static function fromArray(object|array $data): static
     {
         // Converte object para array se necessário
         $dataArray = is_object($data) ? get_object_vars($data) : $data;
 
-        if (isset($dataArray['Device'])) $dataArray['Device'] = DeviceDTO::fromArray($dataArray['Device']);
+        if (isset($dataArray['Device']))
+            $dataArray['Device'] = DeviceDTO::fromArray($dataArray['Device']);
 
         return self::createFromTrait($dataArray);
     }

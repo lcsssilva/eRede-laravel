@@ -7,10 +7,12 @@ use Exception;
 use Lcs13761\EredeLaravel\DTOs\AuthorizationDTO;
 use Lcs13761\EredeLaravel\DTOs\BrandDTO;
 use Lcs13761\EredeLaravel\DTOs\CaptureDTO;
+use Lcs13761\EredeLaravel\DTOs\CryptogramDTO;
 use Lcs13761\EredeLaravel\DTOs\DeviceDTO;
 use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
 use Lcs13761\EredeLaravel\DTOs\RefundDTO;
 use Lcs13761\EredeLaravel\DTOs\ThreeDSecureDTO;
+use Lcs13761\EredeLaravel\DTOs\UrlDTO;
 use ReflectionClass;
 
 trait CreateObject
@@ -19,10 +21,10 @@ trait CreateObject
      * Cria uma nova instância a partir de um objeto ou array
      *
      * @param object|array $data
-     * @return BrandDTO|AuthorizationDTO|CaptureDTO|DeviceDTO|QrCodeDTO|RefundDTO|ThreeDSecureDTO|CreateObject
+     * @return BrandDTO|AuthorizationDTO|CaptureDTO|CryptogramDTO|DeviceDTO|QrCodeDTO|RefundDTO|ThreeDSecureDTO|UrlDTO|CreateObject
      * @throws Exception
      */
-    public static function fromArray(object|array $data): self
+    public static function fromArray(object|array $data): static
     {
         // Converte object para array se necessário
         $dataArray = is_object($data) ? get_object_vars($data) : $data;
@@ -46,7 +48,7 @@ trait CreateObject
             $args[$paramName] = $value;
         }
 
-        return new self(...$args);
+        return new static(...$args);
     }
 
     /**

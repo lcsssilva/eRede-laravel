@@ -13,13 +13,13 @@ readonly class StoreConfigDTO
         public EnvironmentDTO $tokenizationEnvironment,
     ) {}
 
-    public static function fromConfig(array $config): self
+    public static function fromConfig(array $config): static
     {
         $authorizationUrl = $config['sandbox'] ? $config['sandbox_authorization'] : $config['production_authorization'];
         $tokenizationUrl = $config['sandbox'] ? $config['sandbox_tokenization'] : $config['production_tokenization'];
 
 
-        return new self(
+        return new static(
             filiation: $config['filiation'],
             token: $config['api_token'],
             authorizationEnvironment: new EnvironmentDTO($authorizationUrl),
