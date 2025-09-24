@@ -39,7 +39,7 @@ readonly class EredeTransaction implements EredeTransactionInterface
      * @throws TransactionException
      * @throws Exception
      */
-    public function captureTransaction(string $transactionId, int $amount = null): PaymentRequestDTO
+    public function captureTransaction(string $transactionId, ?int $amount = null): PaymentRequestDTO
     {
         $data = [];
 
@@ -56,7 +56,7 @@ readonly class EredeTransaction implements EredeTransactionInterface
      * @throws TransactionException
      * @throws Exception
      */
-    public function cancelTransaction(string $transactionId, int $amount = null): PaymentRequestDTO
+    public function cancelTransaction(string $transactionId, ?int $amount = null): PaymentRequestDTO
     {
         $data = [];
 
