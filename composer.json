@@ -18,6 +18,10 @@
       "role": "Developer"
     }
   ],
+  "support": {
+    "issues": "https://github.com/lcsssilva/erede-laravel/issues",
+    "source": "https://github.com/lcsssilva/erede-laravel"
+  },
   "require": {
     "php": "^8.2",
     "illuminate/support": "^10.0|^11.0|^12.0",
