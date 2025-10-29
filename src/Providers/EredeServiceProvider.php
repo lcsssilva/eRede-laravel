@@ -1,13 +1,13 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Providers;
+namespace Lcsssilva\EredeLaravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Lcs13761\EredeLaravel\Contracts\EredeServiceInterface;
-use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\DTOs\StoreConfigDTO;
-use Lcs13761\EredeLaravel\Http\EredeHttpClient;
-use Lcs13761\EredeLaravel\Services\EredeService;
+use Lcsssilva\EredeLaravel\Contracts\EredeServiceInterface;
+use Lcsssilva\EredeLaravel\Contracts\HttpClientInterface;
+use Lcsssilva\EredeLaravel\DTOs\StoreConfigDTO;
+use Lcsssilva\EredeLaravel\Http\EredeHttpClient;
+use Lcsssilva\EredeLaravel\Services\EredeService;
 
 class EredeServiceProvider extends ServiceProvider
 {

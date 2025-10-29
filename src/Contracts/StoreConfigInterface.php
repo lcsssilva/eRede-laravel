@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Contracts;
+namespace Lcsssilva\EredeLaravel\Contracts;
 
-use Lcs13761\EredeLaravel\Enums\EndpointType;
-use Lcs13761\EredeLaravel\Enums\Environment;
+use Lcsssilva\EredeLaravel\Enums\EndpointType;
+use Lcsssilva\EredeLaravel\Enums\Environment;
 
 interface StoreConfigInterface
 {

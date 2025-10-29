@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Http;
+namespace Lcsssilva\EredeLaravel\Http;
 
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
-use Lcs13761\EredeLaravel\DTOs\StoreConfigDTO;
-use Lcs13761\EredeLaravel\Enums\EndpointType;
-use Lcs13761\EredeLaravel\Enums\HttpMethod;
-use Lcs13761\EredeLaravel\Services\ERedeOAuthService;
+use Lcsssilva\EredeLaravel\Contracts\HttpClientInterface;
+use Lcsssilva\EredeLaravel\DTOs\ResponseDTO;
+use Lcsssilva\EredeLaravel\DTOs\StoreConfigDTO;
+use Lcsssilva\EredeLaravel\Enums\EndpointType;
+use Lcsssilva\EredeLaravel\Enums\HttpMethod;
+use Lcsssilva\EredeLaravel\Services\ERedeOAuthService;
 
 final readonly class EredeHttpClient implements HttpClientInterface
 {

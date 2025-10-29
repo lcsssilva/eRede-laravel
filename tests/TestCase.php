@@ -1,11 +1,11 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Tests;
+namespace Lcsssilva\EredeLaravel\Tests;
 
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
-use Lcs13761\EredeLaravel\Providers\EredeServiceProvider;
+use Lcsssilva\EredeLaravel\Providers\EredeServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageAliases($app): array
     {
         return [
-            'Erede' => \Lcs13761\EredeLaravel\Facades\Erede::class,
+            'Erede' => \Lcsssilva\EredeLaravel\Facades\Erede::class,
         ];
     }
 

@@ -1,5 +1,5 @@
 {
-  "name": "lcs13761/erede-laravel",
+  "name": "lcsssilva/erede-laravel",
   "description": "Pacote Laravel para integração com a API de pagamentos da eRede (Rede S.A.)",
   "type": "library",
   "license": "MIT",
@@ -9,12 +9,12 @@
     "payment",
     "pagamento"
   ],
-  "homepage": "https://github.com/lcs13761/erede-laravel",
+  "homepage": "https://github.com/lcsssilva/erede-laravel",
   "authors": [
     {
       "name": "lcs13",
-      "email": "lcs13761@hotmail.com",
-      "homepage": "https://github.com/lcs13761",
+      "email": "lcsssilva@hotmail.com",
+      "homepage": "https://github.com/lcsssilva",
       "role": "Developer"
     }
   ],
@@ -29,21 +29,21 @@
   },
   "autoload": {
     "psr-4": {
-      "Lcs13761\\EredeLaravel\\": "src/"
+      "Lcsssilva\\EredeLaravel\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Lcs13761\\EredeLaravel\\Tests\\": "tests/"
+      "Lcsssilva\\EredeLaravel\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Lcs13761\\EredeLaravel\\Providers\\EredeServiceProvider"
+        "Lcsssilva\\EredeLaravel\\Providers\\EredeServiceProvider"
       ],
       "aliases": {
-        "Erede": "Lcs13761\\EredeLaravel\\Facades\\Erede"
+        "Erede": "Lcsssilva\\EredeLaravel\\Facades\\Erede"
       }
     }
   },

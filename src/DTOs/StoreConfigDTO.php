@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\DTOs;
+namespace Lcsssilva\EredeLaravel\DTOs;
 
 
-use Lcs13761\EredeLaravel\Contracts\StoreConfigInterface;
-use Lcs13761\EredeLaravel\Enums\EndpointType;
-use Lcs13761\EredeLaravel\Enums\Environment;
+use Lcsssilva\EredeLaravel\Contracts\StoreConfigInterface;
+use Lcsssilva\EredeLaravel\Enums\EndpointType;
+use Lcsssilva\EredeLaravel\Enums\Environment;
 
 readonly class StoreConfigDTO implements StoreConfigInterface
 {

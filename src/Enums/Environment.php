@@ -1,6 +1,6 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Enums;
+namespace Lcsssilva\EredeLaravel\Enums;
 
 enum Environment: string
 {

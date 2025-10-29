@@ -1,13 +1,13 @@
 <?php
 
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
-use Lcs13761\EredeLaravel\Services\EredeTransaction;
-use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\Services\EredeTransaction;
+use Lcsssilva\EredeLaravel\Contracts\HttpClientInterface;
+use Lcsssilva\EredeLaravel\DTOs\ResponseDTO;
 
 // ✅ DTO correto
-use Lcs13761\EredeLaravel\Exceptions\TransactionException;
-use Lcs13761\EredeLaravel\Enums\HttpMethod;
+use Lcsssilva\EredeLaravel\Exceptions\TransactionException;
+use Lcsssilva\EredeLaravel\Enums\HttpMethod;
 
 beforeEach(function () {
     $this->mockHttpClient = Mockery::mock(HttpClientInterface::class);

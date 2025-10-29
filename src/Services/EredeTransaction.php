@@ -1,13 +1,13 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Services;
+namespace Lcsssilva\EredeLaravel\Services;
 
 use Exception;
-use Lcs13761\EredeLaravel\Contracts\EredeTransactionInterface;
-use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
-use Lcs13761\EredeLaravel\Enums\HttpMethod;
-use Lcs13761\EredeLaravel\Exceptions\TransactionException;
+use Lcsssilva\EredeLaravel\Contracts\EredeTransactionInterface;
+use Lcsssilva\EredeLaravel\Contracts\HttpClientInterface;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\Enums\HttpMethod;
+use Lcsssilva\EredeLaravel\Exceptions\TransactionException;
 
 readonly class EredeTransaction implements EredeTransactionInterface
 {

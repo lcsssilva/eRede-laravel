@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Contracts;
+namespace Lcsssilva\EredeLaravel\Contracts;
 
-use Lcs13761\EredeLaravel\Enums\EndpointType;
-use Lcs13761\EredeLaravel\Enums\HttpMethod;
-use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
+use Lcsssilva\EredeLaravel\Enums\EndpointType;
+use Lcsssilva\EredeLaravel\Enums\HttpMethod;
+use Lcsssilva\EredeLaravel\DTOs\ResponseDTO;
 
 
 interface HttpClientInterface

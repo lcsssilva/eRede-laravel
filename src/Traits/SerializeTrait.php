@@ -1,6 +1,6 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Traits;
+namespace Lcsssilva\EredeLaravel\Traits;
 
 trait SerializeTrait
 {

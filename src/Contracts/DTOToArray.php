@@ -1,6 +1,6 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Contracts;
+namespace Lcsssilva\EredeLaravel\Contracts;
 
 interface DTOToArray
 {

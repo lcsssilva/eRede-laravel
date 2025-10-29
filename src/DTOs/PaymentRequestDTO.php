@@ -1,11 +1,11 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\DTOs;
+namespace Lcsssilva\EredeLaravel\DTOs;
 
 use ArrayIterator;
 use DateTime;
 use Exception;
-use Lcs13761\EredeLaravel\Contracts\DTOToArray;
+use Lcsssilva\EredeLaravel\Contracts\DTOToArray;
 
 class PaymentRequestDTO implements DTOToArray
 {

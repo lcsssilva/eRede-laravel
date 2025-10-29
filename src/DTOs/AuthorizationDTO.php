@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\DTOs;
+namespace Lcsssilva\EredeLaravel\DTOs;
 
 use DateTimeInterface;
-use Lcs13761\EredeLaravel\Contracts\DTOFromArray;
-use Lcs13761\EredeLaravel\Contracts\DTOToArray;
-use Lcs13761\EredeLaravel\Enums\PaymentRedeStatus;
-use Lcs13761\EredeLaravel\Traits\CreateObject;
-use Lcs13761\EredeLaravel\Traits\SerializeTrait;
+use Lcsssilva\EredeLaravel\Contracts\DTOFromArray;
+use Lcsssilva\EredeLaravel\Contracts\DTOToArray;
+use Lcsssilva\EredeLaravel\Enums\PaymentRedeStatus;
+use Lcsssilva\EredeLaravel\Traits\CreateObject;
+use Lcsssilva\EredeLaravel\Traits\SerializeTrait;
 
 readonly class AuthorizationDTO implements DTOToArray, DTOFromArray
 {

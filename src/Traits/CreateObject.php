@@ -1,18 +1,18 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Traits;
+namespace Lcsssilva\EredeLaravel\Traits;
 
 use DateTime;
 use Exception;
-use Lcs13761\EredeLaravel\DTOs\AuthorizationDTO;
-use Lcs13761\EredeLaravel\DTOs\BrandDTO;
-use Lcs13761\EredeLaravel\DTOs\CaptureDTO;
-use Lcs13761\EredeLaravel\DTOs\CryptogramDTO;
-use Lcs13761\EredeLaravel\DTOs\DeviceDTO;
-use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
-use Lcs13761\EredeLaravel\DTOs\RefundDTO;
-use Lcs13761\EredeLaravel\DTOs\ThreeDSecureDTO;
-use Lcs13761\EredeLaravel\DTOs\UrlDTO;
+use Lcsssilva\EredeLaravel\DTOs\AuthorizationDTO;
+use Lcsssilva\EredeLaravel\DTOs\BrandDTO;
+use Lcsssilva\EredeLaravel\DTOs\CaptureDTO;
+use Lcsssilva\EredeLaravel\DTOs\CryptogramDTO;
+use Lcsssilva\EredeLaravel\DTOs\DeviceDTO;
+use Lcsssilva\EredeLaravel\DTOs\QrCodeDTO;
+use Lcsssilva\EredeLaravel\DTOs\RefundDTO;
+use Lcsssilva\EredeLaravel\DTOs\ThreeDSecureDTO;
+use Lcsssilva\EredeLaravel\DTOs\UrlDTO;
 use ReflectionClass;
 
 trait CreateObject

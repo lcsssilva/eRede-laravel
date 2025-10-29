@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\DTOs;
+namespace Lcsssilva\EredeLaravel\DTOs;
 
-use Lcs13761\EredeLaravel\Contracts\DTOFromArray;
-use Lcs13761\EredeLaravel\Contracts\DTOToArray;
-use Lcs13761\EredeLaravel\Traits\CreateObject;
-use Lcs13761\EredeLaravel\Traits\SerializeTrait;
+use Lcsssilva\EredeLaravel\Contracts\DTOFromArray;
+use Lcsssilva\EredeLaravel\Contracts\DTOToArray;
+use Lcsssilva\EredeLaravel\Traits\CreateObject;
+use Lcsssilva\EredeLaravel\Traits\SerializeTrait;
 
 readonly class DeviceDTO implements DTOToArray, DTOFromArray
 {

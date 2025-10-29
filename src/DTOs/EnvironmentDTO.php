@@ -1,6 +1,6 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\DTOs;
+namespace Lcsssilva\EredeLaravel\DTOs;
 
 readonly class EnvironmentDTO
 {

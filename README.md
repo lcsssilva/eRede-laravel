@@ -1,9 +1,9 @@
 # eRede Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
-[![Total Downloads](https://img.shields.io/packagist/dt/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
-[![PHP Version Require](https://img.shields.io/packagist/php-v/lcs13761/erede-laravel?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
-[![License](https://img.shields.io/packagist/l/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/lcsssilva/erede-laravel?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![License](https://img.shields.io/packagist/l/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
 
 Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.).
 
@@ -35,11 +35,11 @@ Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.
 
 ### 1. Instalar o pacote
 ```
-composer require lcs13761/erede-laravel
+composer require lcsssilva/erede-laravel
 ```
 ### 2. Publicar a configuração
 ```
-php artisan vendor:publish --provider="Lcs13761\EredeLaravel\Providers\EredeServiceProvider"
+php artisan vendor:publish --provider="Lcsssilva\EredeLaravel\Providers\EredeServiceProvider"
 ```
 ### 3. Configurar variáveis de ambiente
 
@@ -63,8 +63,8 @@ EREDE_BUFFER_MINUTES=2
 ### Facade
 
 ```php
-use Lcs13761\EredeLaravel\Facades\Erede;
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\Facades\Erede;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
 
 // Criar transação com cartão de crédito
 $payment = (new PaymentRequestDTO())

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Services;
+namespace Lcsssilva\EredeLaravel\Services;
 
-use Lcs13761\EredeLaravel\Contracts\EredeTokenizationInterface;
-use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
-use Lcs13761\EredeLaravel\Contracts\EredeServiceInterface;
+use Lcsssilva\EredeLaravel\Contracts\EredeTokenizationInterface;
+use Lcsssilva\EredeLaravel\Contracts\HttpClientInterface;
+use Lcsssilva\EredeLaravel\Contracts\EredeServiceInterface;
 
 final readonly class EredeService implements EredeServiceInterface
 {

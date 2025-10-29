@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Contracts;
+namespace Lcsssilva\EredeLaravel\Contracts;
 
 
 interface EredeServiceInterface

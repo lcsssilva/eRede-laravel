@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Facades;
+namespace Lcsssilva\EredeLaravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Lcs13761\EredeLaravel\Contracts\EredeServiceInterface;
-use Lcs13761\EredeLaravel\Services\EredeTransaction;
+use Lcsssilva\EredeLaravel\Contracts\EredeServiceInterface;
+use Lcsssilva\EredeLaravel\Services\EredeTransaction;
 
 /**
  * @method static EredeTransaction transaction()

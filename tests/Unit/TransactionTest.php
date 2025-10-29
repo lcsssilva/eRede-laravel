@@ -1,7 +1,7 @@
 <?php
 
-use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\DTOs\QrCodeDTO;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
 
 
 describe('TransactionDTO', function () {

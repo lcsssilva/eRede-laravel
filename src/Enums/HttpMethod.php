@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lcs13761\EredeLaravel\Enums;
+namespace Lcsssilva\EredeLaravel\Enums;
 
 enum HttpMethod: string
 {

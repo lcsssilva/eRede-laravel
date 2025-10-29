@@ -11,9 +11,9 @@
 |
 */
 
-use Lcs13761\EredeLaravel\Tests\TestCase;
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
-use Lcs13761\EredeLaravel\DTOs\QrCodeDTO;
+use Lcsssilva\EredeLaravel\Tests\TestCase;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\DTOs\QrCodeDTO;
 
 uses(TestCase::class)->in('Feature');
 uses(TestCase::class)->in('Unit');
@@ -34,7 +34,7 @@ expect()->extend('toBeOne', function () {
 });
 
 expect()->extend('toBeEredeService', function () {
-    return $this->toBeInstanceOf(\Lcs13761\EredeLaravel\Services\EredeTransaction::class);
+    return $this->toBeInstanceOf(\Lcsssilva\EredeLaravel\Services\EredeTransaction::class);
 });
 
 expect()->extend('toBeTransactionDTO', function () {
@@ -134,5 +134,5 @@ function createCancelledTransactionResponse(): array
  */
 function createMockHttpClient(): \Mockery\MockInterface
 {
-    return Mockery::mock(\Lcs13761\EredeLaravel\Contracts\HttpClientInterface::class);
+    return Mockery::mock(\Lcsssilva\EredeLaravel\Contracts\HttpClientInterface::class);
 }

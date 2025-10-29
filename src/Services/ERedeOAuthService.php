@@ -1,6 +1,6 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Services;
+namespace Lcsssilva\EredeLaravel\Services;
 
 use Exception;
 use Illuminate\Http\Client\Response;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Lcs13761\EredeLaravel\Contracts\StoreConfigInterface;
+use Lcsssilva\EredeLaravel\Contracts\StoreConfigInterface;
 
 readonly class ERedeOAuthService
 {

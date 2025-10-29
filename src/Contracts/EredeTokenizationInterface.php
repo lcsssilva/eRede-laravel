@@ -1,8 +1,8 @@
 <?php
 
-namespace Lcs13761\EredeLaravel\Contracts;
+namespace Lcsssilva\EredeLaravel\Contracts;
 
-use Lcs13761\EredeLaravel\DTOs\PaymentRequestDTO;
+use Lcsssilva\EredeLaravel\DTOs\PaymentRequestDTO;
 
 interface EredeTokenizationInterface
 {
