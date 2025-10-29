@@ -57,10 +57,6 @@ EREDE_SANDBOX=true
 EREDE_OAUTH_ENABLED=true
 EREDE_TIMEOUT=30
 EREDE_BUFFER_MINUTES=2
-
-# Prefixos de cache (opcional)
-EREDE_CACHE_PREFIX_KEY=erede_token
-EREDE_CACHE_PREFIX_EXPIRATION=erede_token_expiration
 ```
 ## 🔧 Uso Básico
 
