@@ -1,9 +1,9 @@
 # eRede Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
-[![Total Downloads](https://img.shields.io/packagist/dt/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
-[![PHP Version Require](https://img.shields.io/packagist/php-v/lcs13761/erede-laravel?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
-[![License](https://img.shields.io/packagist/l/lcs13761/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcs13761/erede-laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/lcsssilva/erede-laravel?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
+[![License](https://img.shields.io/packagist/l/lcsssilva/erede-laravel.svg?style=flat-square)](https://packagist.org/packages/lcsssilva/erede-laravel)
 
 Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.).
 
