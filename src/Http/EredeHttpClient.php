@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Lcs13761\EredeLaravel\Http;
 
+use Exception;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Lcs13761\EredeLaravel\Contracts\HttpClientInterface;
@@ -12,11 +14,15 @@ use Lcs13761\EredeLaravel\DTOs\ResponseDTO;
 use Lcs13761\EredeLaravel\DTOs\StoreConfigDTO;
 use Lcs13761\EredeLaravel\Enums\EndpointType;
 use Lcs13761\EredeLaravel\Enums\HttpMethod;
+use Lcs13761\EredeLaravel\Services\ERedeOAuthService;
 
 final readonly class EredeHttpClient implements HttpClientInterface
 {
+    private ERedeOAuthService $oauthService;
+
     public function __construct(private StoreConfigDTO $storeConfig)
     {
+        $this->oauthService = new ERedeOAuthService($storeConfig);
     }
 
     /**
@@ -39,13 +45,11 @@ final readonly class EredeHttpClient implements HttpClientInterface
      */
     private function makeRequest(HttpMethod $method, string $endpoint, array $data = [], array $headers = [], EndpointType $endpointType = EndpointType::AUTHORIZATION): Response
     {
-        $url = $this->getBaseUrlByType($endpointType) . '/' . ltrim($endpoint, '/');
+        $url = $this->buildUrl($endpointType, $endpoint);
 
-        $client = Http::withBasicAuth(
-            $this->storeConfig->filiation,
-            $this->storeConfig->token
-        )
-            ->withHeaders($this->buildHeaders($headers))
+        $client = $this->clientInit();
+
+        $client->withHeaders($this->buildHeaders($headers))
             ->withOptions([
                 'curl' => [
                     CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
@@ -61,14 +65,28 @@ final readonly class EredeHttpClient implements HttpClientInterface
         };
     }
 
-    private function getBaseUrlByType(EndpointType $endpointType): string
+    /**
+     * Constrói a URL completa
+     *
+     * @param EndpointType $endpointType
+     * @param string $endpoint
+     * @return string
+     */
+    private function buildUrl(EndpointType $endpointType, string $endpoint): string
     {
-        return match ($endpointType) {
-            EndpointType::AUTHORIZATION => $this->storeConfig->authorizationEnvironment->getBaseUrl(),
-            EndpointType::TOKENIZATION => $this->storeConfig->tokenizationEnvironment->getBaseUrl(),
-        };
+        return $this->storeConfig->getApiBaseUrl($endpointType) . '/' . ltrim($endpoint, '/');
     }
 
+    /**
+     * @return PendingRequest
+     * @throws Exception
+     */
+    private function clientInit(): PendingRequest
+    {
+        return $this->storeConfig->getOAuthType() ?
+            Http::withToken($this->oauthService->getAccessToken())->timeout($this->storeConfig->getTimeout()) :
+            Http::withBasicAuth($this->storeConfig->getClientId(), $this->storeConfig->getClientSecret());
+    }
 
     /**
      * @param array $customHeaders

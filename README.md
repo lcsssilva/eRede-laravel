@@ -15,8 +15,12 @@ Pacote Laravel para integração com a API de pagamentos da **eRede** (Rede S.A.
 - ✅ **DTOs tipados** para melhor experiência no IDE
 - ✅ **Suporte a tokenização** de cartões
 - ✅ **PIX e Cartão de Crédito** suportados
+- ✅ **OAuth 2.0** com cache automático de tokens
+- ✅ **Criptografia de credenciais** em cache
 - ✅ **PSR-4** autoloading
 - ✅ **PHP 8.2+** com recursos modernos
+- ✅ **Readonly DTOs** para imutabilidade
+- ✅ **Traits reutilizáveis** para serialização
 
 ## 📋 Requisitos
 
@@ -48,6 +52,15 @@ EREDE_TOKEN=seu_token_aqui
 
 # Ambiente (sandbox(true) ou production(false))
 EREDE_SANDBOX=true
+
+# Configurações OAuth (opcional)
+EREDE_OAUTH_ENABLED=true
+EREDE_TIMEOUT=30
+EREDE_BUFFER_MINUTES=2
+
+# Prefixos de cache (opcional)
+EREDE_CACHE_PREFIX_KEY=erede_token
+EREDE_CACHE_PREFIX_EXPIRATION=erede_token_expiration
 ```
 ## 🔧 Uso Básico
 
