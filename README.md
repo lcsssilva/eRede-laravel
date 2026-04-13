@@ -53,7 +53,7 @@ EREDE_TOKEN=seu_token_aqui
 # Ambiente (sandbox(true) ou production(false))
 EREDE_SANDBOX=true
 
-# Configurações OAuth (opcional)
+# Configurações OAuth
 EREDE_OAUTH_ENABLED=true
 EREDE_TIMEOUT=30
 EREDE_BUFFER_MINUTES=2
